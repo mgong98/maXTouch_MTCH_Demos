@@ -32,6 +32,14 @@
             max-touches = <5>;
             startup-delay-ms = <100>;
         };
+
+        mtch: mtch@3a {
+            compatible = "microchip,mtch";
+            reg = <0x3a>;
+            irq-gpios = <&pioa 20 GPIO_ACTIVE_LOW>;
+            startup-delay-ms = <100>;
+            status = "okay";
+        };
     };
 };
 

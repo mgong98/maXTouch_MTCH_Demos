@@ -52,3 +52,33 @@ config INPUT_MICROCHIP_MAXTOUCH_THREAD_PRIORITY
 	  value only if touch latency matters more than application deadlines.
 
 endif # INPUT_MICROCHIP_MAXTOUCH
+
+config INPUT_MICROCHIP_MTCH
+	bool "Microchip MTCH capacitive touch controller"
+	default n
+	depends on INPUT
+	select I2C
+	select GPIO
+	select INPUT_TOUCH
+	help
+	  Enable support for Microchip MTCH capacitive touch
+	  controllers over I2C with button, slider, and wheel support.
+
+if INPUT_MICROCHIP_MTCH
+
+config INPUT_MICROCHIP_MTCH_PERIOD_MS
+	int "Polling period in ms (when no IRQ)"
+	default 5
+	range 5 100
+	help
+	  Touch polling interval when operating without an interrupt GPIO.
+	  Lower values give faster response but use more CPU.
+
+config INPUT_MICROCHIP_MTCH_INTERRUPT
+	bool
+	default y if $(dt_compat_any_has_prop,$(DT_COMPAT_MICROCHIP_MTCH),irq-gpios)
+	help
+	  Auto-selected when irq-gpios is present in the device tree node.
+	  When disabled, the driver uses polling mode via k_timer.
+
+endif # INPUT_MICROCHIP_MTCH
