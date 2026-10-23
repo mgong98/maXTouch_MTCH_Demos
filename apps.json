@@ -1,0 +1,16 @@
+{
+  "name": "mgs_lvgl_touch",
+  "description": "MGS LVGL Touch Demo using maXTouch and MTCH Components",
+  "apps": [
+    {
+      "name": "mgs_lvgl_touch_demo_ac40t08a",
+      "path": "mgs_lvgl_touch_demo_ac40t08a",
+      "description": "LVGL Demo for AC40T08A MIPI Display"
+    },
+    {
+      "name": "mgs_lvgl_touch_demo_ac69t88a",
+      "path": "mgs_lvgl_touch_demo_ac69t88a",
+      "description": "LVGL Demo for AC69T88AA LVDS Display"
+    }
+  ]
+}
