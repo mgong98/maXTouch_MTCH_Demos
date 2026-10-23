@@ -1,0 +1,19 @@
+# Copyright (c) 2026 Microchip Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config DISPLAY_MICROCHIP_SAM_DSI
+	bool "Microchip SAM DSI Host Controller"
+	default y
+	depends on DT_HAS_MICROCHIP_SAM_DSI_ENABLED
+	help
+	  Enable Microchip SAM DSI (MIPI Display Serial Interface) host
+	  controller driver. This provides the bridge between the XLCDC
+	  parallel output and MIPI-DSI connected displays.
+
+config MICROCHIP_SAM_DSI_INIT_PRIORITY
+	int "DSI bridge initialization priority"
+	default 40
+	depends on DISPLAY_MICROCHIP_SAM_DSI
+	help
+	  DSI bridge init priority. Must be lower (earlier) than XLCDC
+	  parent driver priority so DSI is ready before display starts.

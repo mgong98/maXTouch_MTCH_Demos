@@ -1,0 +1,3 @@
+# Link the specific driver directories
+add_subdirectory(microchip_sam_xlcdc)
+add_subdirectory_ifdef(CONFIG_DISPLAY_MICROCHIP_SAM_DSI microchip_sam_dsi)

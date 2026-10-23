@@ -1,0 +1,84 @@
+config INPUT_MICROCHIP_MAXTOUCH
+	bool "Microchip maXTouch capacitive touch controller"
+	default y
+	depends on DT_HAS_MICROCHIP_MAXTOUCH_ENABLED
+	depends on INPUT
+	select I2C
+	select GPIO
+	select INPUT_TOUCH
+	help
+	  Enable support for Microchip maXTouch capacitive touch
+	  controllers over I2C with multitouch support.
+
+if INPUT_MICROCHIP_MAXTOUCH
+
+config INPUT_MICROCHIP_MAXTOUCH_MAX_TOUCHES
+	int "Maximum simultaneous touch points"
+	default 10
+	range 1 16
+	help
+	  Maximum number of simultaneous touch points to track.
+	  Higher values use more RAM for touch state tracking.
+
+config INPUT_MICROCHIP_MAXTOUCH_PERIOD_MS
+	int "Polling period in ms (when no IRQ)"
+	default 5
+	range 5 100
+	help
+	  Touch polling interval when operating without an interrupt GPIO.
+	  Lower values give faster response but use more CPU.
+
+config INPUT_MICROCHIP_MAXTOUCH_INTERRUPT
+	bool
+	default y if $(dt_compat_any_has_prop,$(DT_COMPAT_MICROCHIP_MAXTOUCH),irq-gpios)
+	help
+	  Auto-selected when irq-gpios is present in the device tree node.
+	  When disabled, the driver uses polling mode via k_timer.
+
+config INPUT_MICROCHIP_MAXTOUCH_THREAD_STACK_SIZE
+	int "Drain thread stack size"
+	default 1024
+	help
+	  Stack size for the message-drain thread. The thread performs I2C
+	  reads and input_report() calls.
+
+config INPUT_MICROCHIP_MAXTOUCH_THREAD_PRIORITY
+	int "Drain thread priority"
+	default 5
+	help
+	  Priority of the message-drain thread. The default is preemptible so
+	  the driver does not delay higher-priority application threads while
+	  it waits for the CHG line to deassert. Use a cooperative (negative)
+	  value only if touch latency matters more than application deadlines.
+
+endif # INPUT_MICROCHIP_MAXTOUCH
+
+config INPUT_MICROCHIP_MTCH
+	bool "Microchip MTCH capacitive touch controller"
+	default n
+	depends on INPUT
+	select I2C
+	select GPIO
+	select INPUT_TOUCH
+	help
+	  Enable support for Microchip MTCH capacitive touch
+	  controllers over I2C with button, slider, and wheel support.
+
+if INPUT_MICROCHIP_MTCH
+
+config INPUT_MICROCHIP_MTCH_PERIOD_MS
+	int "Polling period in ms (when no IRQ)"
+	default 5
+	range 5 100
+	help
+	  Touch polling interval when operating without an interrupt GPIO.
+	  Lower values give faster response but use more CPU.
+
+config INPUT_MICROCHIP_MTCH_INTERRUPT
+	bool
+	default y if $(dt_compat_any_has_prop,$(DT_COMPAT_MICROCHIP_MTCH),irq-gpios)
+	help
+	  Auto-selected when irq-gpios is present in the device tree node.
+	  When disabled, the driver uses polling mode via k_timer.
+
+endif # INPUT_MICROCHIP_MTCH

@@ -1,0 +1,136 @@
+description: |
+  Microchip SAM DSI (MIPI Display Serial Interface) Host Controller
+
+  Provides the bridge between the XLCDC DPI parallel output and
+  MIPI-DSI connected displays. Includes D-PHY PLL configuration
+  and panel initialization via DCS commands.
+
+  Example:
+
+    dsi: dsi@e1404000 {
+        compatible = "microchip,sam-dsi";
+        reg = <0xe1404000 0x4000>;
+        status = "okay";
+        num-lanes = <4>;
+        width = <720>;
+        height = <1280>;
+        bit-clock-khz = <456000>;
+        panel-type = "hx8394f";
+
+        display-timings {
+            compatible = "zephyr,panel-timing";
+            clock-frequency = <60226000>;
+            hsync-len = <24>;
+            hfront-porch = <12>;
+            hback-porch = <12>;
+            vsync-len = <1>;
+            vfront-porch = <13>;
+            vback-porch = <13>;
+            de-active = <0>;
+            hsync-active = <1>;
+            vsync-active = <1>;
+            pixelclk-active = <0>;
+        };
+    };
+
+compatible: "microchip,sam-dsi"
+
+include: [base.yaml]
+
+properties:
+  reg:
+    required: true
+
+  num-lanes:
+    type: int
+    required: true
+    description: |
+      Number of MIPI-DSI data lanes (1-4).
+
+  width:
+    type: int
+    required: true
+    description: |
+      Panel horizontal resolution in pixels.
+
+  height:
+    type: int
+    required: true
+    description: |
+      Panel vertical resolution in pixels.
+
+  bit-clock-khz:
+    type: int
+    default: 456000
+    description: |
+      D-PHY bit clock frequency in kHz. The byte clock is bit_clock / 8.
+      This determines the MIPI-DSI lane speed.
+
+  panel-type:
+    type: string
+    default: "hx8394f"
+    description: |
+      Panel controller type for initialization sequence selection.
+    enum:
+      - "hx8394f"
+      - "generic"
+
+  dphy-n-ratio:
+    type: int
+    default: 3
+    description: |
+      D-PHY PLL N divider ratio. PLL_out = ref_clk * M / N.
+
+  dphy-m-ratio:
+    type: int
+    default: 57
+    description: |
+      D-PHY PLL M multiplier ratio.
+
+  dphy-hsbrc:
+    type: int
+    default: 44
+    description: |
+      D-PHY high-speed bit rate control register value.
+
+  dphy-vco-range:
+    type: int
+    default: 2
+    description: |
+      D-PHY VCO frequency range selection (0-7).
+
+  dphy-icpctrl:
+    type: int
+    default: 5
+    description: |
+      D-PHY charge pump current control.
+
+  dphy-lpfctrl:
+    type: int
+    default: 1
+    description: |
+      D-PHY loop filter control.
+
+  clk-lp2hs-time:
+    type: int
+    default: 73
+    description: |
+      Clock lane LP to HS transition time in lane byte clocks.
+
+  clk-hs2lp-time:
+    type: int
+    default: 31
+    description: |
+      Clock lane HS to LP transition time in lane byte clocks.
+
+  dat-lp2hs-time:
+    type: int
+    default: 59
+    description: |
+      Data lane LP to HS transition time in lane byte clocks.
+
+  dat-hs2lp-time:
+    type: int
+    default: 22
+    description: |
+      Data lane HS to LP transition time in lane byte clocks.

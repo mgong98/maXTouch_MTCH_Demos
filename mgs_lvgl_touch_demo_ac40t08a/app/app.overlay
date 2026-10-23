@@ -1,0 +1,173 @@
+/*
+ * Device tree overlay for SAMA7D65 Curiosity with AC40T08A MIPI-DSI LCD
+ *
+ * The AC40T08A is a 4.0" 720x1280 MIPI-DSI LCD with HX8394-F controller
+ * and integrated capacitive touch (MaxTouch).
+ */
+
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/interrupt-controller/arm-gic.h>
+#include <zephyr/dt-bindings/i2c/i2c.h>
+#include <zephyr/dt-bindings/mfd/mfd_mchp_sam_flexcom.h>
+
+&pinctrl {
+    flx0_i2c_default: flx0_i2c_default {
+        group1 {
+            pinmux = <PIN_PC7__FLEXCOM0_IO0>,  /* SDA */
+                     <PIN_PC6__FLEXCOM0_IO1>;  /* SCL */
+            bias-pull-up;
+        };
+    };
+};
+
+&flx0 {
+    mchp,flexcom-mode = <SAM_FLEXCOM_MODE_TWI>;
+    status = "okay";
+
+    i2c0: i2c0@600 {
+        pinctrl-0 = <&flx0_i2c_default>;
+        pinctrl-names = "default";
+        clock-frequency = <I2C_BITRATE_FAST>;
+        status = "okay";
+
+        maxtouch: maxtouch@4a {
+            compatible = "microchip,maxtouch";
+            reg = <0x4a>;
+            irq-gpios = <&piob 16 GPIO_ACTIVE_LOW>;
+            /* Match LVGL logical display dimensions (landscape) */
+            screen-width = <1280>;
+            screen-height = <720>;
+            max-touches = <5>;
+            startup-delay-ms = <100>;
+            /* T100 orientation: transform physical portrait touch to
+             * LVGL landscape coordinates. switch-xy swaps axes. */
+            switch-xy;
+            invert-x;
+            invert-y;
+        };
+
+        mtch: mtch@3a {
+            compatible = "microchip,mtch";
+            reg = <0x3a>;
+            irq-gpios = <&pioa 20 GPIO_ACTIVE_LOW>;
+            startup-delay-ms = <100>;
+            status = "okay";
+        };
+    };
+};
+
+/ {
+    chosen {
+        zephyr,display = &base_layer;
+        zephyr,touch = &maxtouch;
+    };
+
+    panel_power: panel-power {
+        compatible = "regulator-fixed";
+        regulator-name = "panel-power";
+        enable-gpios = <&piob 18 GPIO_ACTIVE_HIGH>;
+        regulator-boot-on;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+
+        gpio_dsi_pwm: led_piob_14 {
+            gpios = <&piob 14 GPIO_ACTIVE_HIGH>;
+            label = "DSI Backlight PWM";
+        };
+    };
+
+    /*
+     * MIPI-DSI Host Controller
+     * Replaces LVDSC for MIPI-connected displays
+     */
+    dsi: dsi@e1404000 {
+        compatible = "microchip,sam-dsi";
+        status = "okay";
+        reg = <0xe1404000 0x4000>;
+        num-lanes = <4>;
+        width = <720>;
+        height = <1280>;
+        bit-clock-khz = <456000>;
+        panel-type = "hx8394f";
+
+        /* D-PHY PLL configuration for 456 MHz bit clock */
+        dphy-n-ratio = <3>;
+        dphy-m-ratio = <57>;
+        dphy-hsbrc = <44>;        /* 0x2C */
+        dphy-vco-range = <2>;
+        dphy-icpctrl = <5>;
+        dphy-lpfctrl = <1>;
+
+        /* Lane transition timings */
+        clk-lp2hs-time = <73>;
+        clk-hs2lp-time = <31>;
+        dat-lp2hs-time = <59>;
+        dat-hs2lp-time = <22>;
+
+        display-timings {
+            compatible = "zephyr,panel-timing";
+            clock-frequency = <60226000>;
+            hsync-len = <24>;
+            hfront-porch = <12>;
+            hback-porch = <12>;
+            vsync-len = <1>;
+            vfront-porch = <13>;
+            vback-porch = <13>;
+            de-active = <0>;
+            hsync-active = <1>;
+            vsync-active = <1>;
+            pixelclk-active = <0>;
+        };
+    };
+
+    /*
+     * XLCDC - eXtended LCD Controller
+     * Output routed to DSI instead of LVDSC
+     */
+    xlcdc: xlcdc@e1400000 {
+        compatible = "microchip,sama7d65-xlcdc";
+        status = "okay";
+        reg = <0xe1400000 0x4000>;
+        interrupt-parent = <&gic>;
+        interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+        width = <720>;
+        height = <1280>;
+        pixel-format = <12>;        /* ARGB_8888 */
+        output-mode = "dpi-24";
+        guard-time = <1>;
+        backlight-pwm-source = "slow-clock";
+        backlight-pwm-prescaler = <0>;
+        backlight-brightness = <255>;
+        port = <&dsi>;
+
+        display-timings {
+            compatible = "zephyr,panel-timing";
+            clock-frequency = <60226000>;
+            hsync-len = <24>;
+            hfront-porch = <12>;
+            hback-porch = <12>;
+            vsync-len = <1>;
+            vfront-porch = <13>;
+            vback-porch = <13>;
+            de-active = <0>;
+            hsync-active = <1>;
+            vsync-active = <1>;
+            pixelclk-active = <0>;
+        };
+
+        base_layer: layer-base@0 {
+            compatible = "microchip,sam-xlcdc-layer";
+            reg = <0>;
+            layer-type = "base";
+            width = <720>;
+            height = <1280>;
+            default-color = <0 0 0>;
+            no-alloc-framebuffer;
+            rotation = <90>;  /* Rotate 90 degrees for landscape mode */
+        };
+    };
+};

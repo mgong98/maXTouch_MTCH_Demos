@@ -1,0 +1,2 @@
+rsource "microchip_sam_xlcdc/Kconfig"
+rsource "microchip_sam_dsi/Kconfig"

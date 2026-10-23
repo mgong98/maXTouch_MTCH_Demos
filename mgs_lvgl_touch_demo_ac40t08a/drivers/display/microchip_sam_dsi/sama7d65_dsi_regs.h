@@ -1,0 +1,483 @@
+/*
+ * Copyright (c) 2026 Microchip Technology Inc.
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * SAMA7D65 DSI (MIPI Display Serial Interface) Register Definitions
+ *
+ * This header provides DSI register definitions for the SAMA7D65 SOC.
+ * It can be used if the Zephyr HAL does not yet include DSI support.
+ *
+ * Based on SAMA7D65 datasheet and Harmony DFP component/dsi.h
+ */
+
+#ifndef SAMA7D65_DSI_REGS_H_
+#define SAMA7D65_DSI_REGS_H_
+
+#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Check if DSI registers are already defined by SOC header */
+#ifndef DSI_REGS
+
+/* DSI Base Address */
+#define DSI_BASE_ADDRESS    0xE1404000U
+
+/* DSI Peripheral ID */
+#ifndef ID_DSI
+#define ID_DSI              103
+#endif
+
+/* -------- Register Offsets -------- */
+#define DSI_VERSION_OFFSET          0x00
+#define DSI_PWR_UP_OFFSET           0x04
+#define DSI_CLKMGR_CFG_OFFSET       0x08
+#define DSI_DPI_VCID_OFFSET         0x0C
+#define DSI_DPI_COLOR_CODING_OFFSET 0x10
+#define DSI_DPI_CFG_POL_OFFSET      0x14
+#define DSI_DPI_LP_CMD_TIM_OFFSET   0x18
+#define DSI_PCKHDL_CFG_OFFSET       0x2C
+#define DSI_GEN_VCID_OFFSET         0x30
+#define DSI_MODE_CFG_OFFSET         0x34
+#define DSI_VID_MODE_CFG_OFFSET     0x38
+#define DSI_VID_PKT_SIZE_OFFSET     0x3C
+#define DSI_VID_NUM_CHUNKS_OFFSET   0x40
+#define DSI_VID_NULL_SIZE_OFFSET    0x44
+#define DSI_VID_HSA_TIME_OFFSET     0x48
+#define DSI_VID_HBP_TIME_OFFSET     0x4C
+#define DSI_VID_HLINE_TIME_OFFSET   0x50
+#define DSI_VID_VSA_LINES_OFFSET    0x54
+#define DSI_VID_VBP_LINES_OFFSET    0x58
+#define DSI_VID_VFP_LINES_OFFSET    0x5C
+#define DSI_VID_VACTIVE_LINES_OFFSET 0x60
+#define DSI_CMD_MODE_CFG_OFFSET     0x68
+#define DSI_GEN_HDR_OFFSET          0x6C
+#define DSI_GEN_PLD_DATA_OFFSET     0x70
+#define DSI_CMD_PKT_STATUS_OFFSET   0x74
+#define DSI_TO_CNT_CFG_OFFSET       0x78
+#define DSI_HS_RD_TO_CNT_OFFSET     0x7C
+#define DSI_LP_RD_TO_CNT_OFFSET     0x80
+#define DSI_HS_WR_TO_CNT_OFFSET     0x84
+#define DSI_LP_WR_TO_CNT_OFFSET     0x88
+#define DSI_BTA_TO_CNT_OFFSET       0x8C
+#define DSI_LPCLK_CTRL_OFFSET       0x94
+#define DSI_DPHY_TMR_LPCLK_CFG_OFFSET 0x98
+#define DSI_DPHY_TMR_CFG_OFFSET     0x9C
+#define DSI_DPHY_RSTZ_OFFSET        0xA0
+#define DSI_DPHY_IF_CFG_OFFSET      0xA4
+#define DSI_DPHY_ULPS_CTRL_OFFSET   0xA8
+#define DSI_DPHY_TX_TRIGGERS_OFFSET 0xAC
+#define DSI_DPHY_STATUS_OFFSET      0xB0
+#define DSI_DPHY_TST_CTRL0_OFFSET   0xB4
+#define DSI_DPHY_TST_CTRL1_OFFSET   0xB8
+
+/* -------- DSI Register Structure -------- */
+typedef struct {
+	__I  uint32_t DSI_VERSION;           /* 0x00 */
+	__IO uint32_t DSI_PWR_UP;            /* 0x04 */
+	__IO uint32_t DSI_CLKMGR_CFG;        /* 0x08 */
+	__IO uint32_t DSI_DPI_VCID;          /* 0x0C */
+	__IO uint32_t DSI_DPI_COLOR_CODING;  /* 0x10 */
+	__IO uint32_t DSI_DPI_CFG_POL;       /* 0x14 */
+	__IO uint32_t DSI_DPI_LP_CMD_TIM;    /* 0x18 */
+	__I  uint32_t Reserved1[4];          /* 0x1C-0x28 */
+	__IO uint32_t DSI_PCKHDL_CFG;        /* 0x2C */
+	__IO uint32_t DSI_GEN_VCID;          /* 0x30 */
+	__IO uint32_t DSI_MODE_CFG;          /* 0x34 */
+	__IO uint32_t DSI_VID_MODE_CFG;      /* 0x38 */
+	__IO uint32_t DSI_VID_PKT_SIZE;      /* 0x3C */
+	__IO uint32_t DSI_VID_NUM_CHUNKS;    /* 0x40 */
+	__IO uint32_t DSI_VID_NULL_SIZE;     /* 0x44 */
+	__IO uint32_t DSI_VID_HSA_TIME;      /* 0x48 */
+	__IO uint32_t DSI_VID_HBP_TIME;      /* 0x4C */
+	__IO uint32_t DSI_VID_HLINE_TIME;    /* 0x50 */
+	__IO uint32_t DSI_VID_VSA_LINES;     /* 0x54 */
+	__IO uint32_t DSI_VID_VBP_LINES;     /* 0x58 */
+	__IO uint32_t DSI_VID_VFP_LINES;     /* 0x5C */
+	__IO uint32_t DSI_VID_VACTIVE_LINES; /* 0x60 */
+	__I  uint32_t Reserved2;             /* 0x64 */
+	__IO uint32_t DSI_CMD_MODE_CFG;      /* 0x68 */
+	__IO uint32_t DSI_GEN_HDR;           /* 0x6C */
+	__IO uint32_t DSI_GEN_PLD_DATA;      /* 0x70 */
+	__I  uint32_t DSI_CMD_PKT_STATUS;    /* 0x74 */
+	__IO uint32_t DSI_TO_CNT_CFG;        /* 0x78 */
+	__IO uint32_t DSI_HS_RD_TO_CNT;      /* 0x7C */
+	__IO uint32_t DSI_LP_RD_TO_CNT;      /* 0x80 */
+	__IO uint32_t DSI_HS_WR_TO_CNT;      /* 0x84 */
+	__IO uint32_t DSI_LP_WR_TO_CNT;      /* 0x88 */
+	__IO uint32_t DSI_BTA_TO_CNT;        /* 0x8C */
+	__I  uint32_t Reserved3;             /* 0x90 */
+	__IO uint32_t DSI_LPCLK_CTRL;        /* 0x94 */
+	__IO uint32_t DSI_DPHY_TMR_LPCLK_CFG;/* 0x98 */
+	__IO uint32_t DSI_DPHY_TMR_CFG;      /* 0x9C */
+	__IO uint32_t DSI_DPHY_RSTZ;         /* 0xA0 */
+	__IO uint32_t DSI_DPHY_IF_CFG;       /* 0xA4 */
+	__IO uint32_t DSI_DPHY_ULPS_CTRL;    /* 0xA8 */
+	__IO uint32_t DSI_DPHY_TX_TRIGGERS;  /* 0xAC */
+	__I  uint32_t DSI_DPHY_STATUS;       /* 0xB0 */
+	__IO uint32_t DSI_DPHY_TST_CTRL0;    /* 0xB4 */
+	__IO uint32_t DSI_DPHY_TST_CTRL1;    /* 0xB8 */
+} dsi_registers_t;
+
+#define DSI_REGS    ((dsi_registers_t *)DSI_BASE_ADDRESS)
+
+#endif /* !DSI_REGS */
+
+/* -------- DSI_PWR_UP : Power-Up Control -------- */
+#ifndef DSI_PWR_UP_SHUTDOWNZ_Pos
+#define DSI_PWR_UP_SHUTDOWNZ_Pos      0
+#define DSI_PWR_UP_SHUTDOWNZ_Msk      (0x1U << DSI_PWR_UP_SHUTDOWNZ_Pos)
+#define DSI_PWR_UP_SHUTDOWNZ(value)   (DSI_PWR_UP_SHUTDOWNZ_Msk & ((value) << DSI_PWR_UP_SHUTDOWNZ_Pos))
+#endif
+
+/* -------- DSI_CLKMGR_CFG : Clock Management -------- */
+#ifndef DSI_CLKMGR_CFG_TX_ESC_CLK_DIVISION_Pos
+#define DSI_CLKMGR_CFG_TX_ESC_CLK_DIVISION_Pos  0
+#define DSI_CLKMGR_CFG_TX_ESC_CLK_DIVISION_Msk  (0xFFU << DSI_CLKMGR_CFG_TX_ESC_CLK_DIVISION_Pos)
+#define DSI_CLKMGR_CFG_TX_ESC_CLK_DIVISION(value) \
+	(DSI_CLKMGR_CFG_TX_ESC_CLK_DIVISION_Msk & ((value) << DSI_CLKMGR_CFG_TX_ESC_CLK_DIVISION_Pos))
+
+#define DSI_CLKMGR_CFG_TO_CLK_DIVISION_Pos      8
+#define DSI_CLKMGR_CFG_TO_CLK_DIVISION_Msk      (0xFFU << DSI_CLKMGR_CFG_TO_CLK_DIVISION_Pos)
+#define DSI_CLKMGR_CFG_TO_CLK_DIVISION(value) \
+	(DSI_CLKMGR_CFG_TO_CLK_DIVISION_Msk & ((value) << DSI_CLKMGR_CFG_TO_CLK_DIVISION_Pos))
+#endif
+
+/* -------- DSI_DPI_VCID : DPI Virtual Channel ID -------- */
+#ifndef DSI_DPI_VCID_DPI_VCID_Pos
+#define DSI_DPI_VCID_DPI_VCID_Pos     0
+#define DSI_DPI_VCID_DPI_VCID_Msk     (0x3U << DSI_DPI_VCID_DPI_VCID_Pos)
+#define DSI_DPI_VCID_DPI_VCID(value)  (DSI_DPI_VCID_DPI_VCID_Msk & ((value) << DSI_DPI_VCID_DPI_VCID_Pos))
+#endif
+
+/* -------- DSI_DPI_COLOR_CODING -------- */
+#ifndef DSI_DPI_COLOR_CODING_DPI_COLOR_CODING_Pos
+#define DSI_DPI_COLOR_CODING_DPI_COLOR_CODING_Pos  0
+#define DSI_DPI_COLOR_CODING_DPI_COLOR_CODING_Msk  (0xFU << DSI_DPI_COLOR_CODING_DPI_COLOR_CODING_Pos)
+#define DSI_DPI_COLOR_CODING_DPI_COLOR_CODING(value) \
+	(DSI_DPI_COLOR_CODING_DPI_COLOR_CODING_Msk & ((value) << DSI_DPI_COLOR_CODING_DPI_COLOR_CODING_Pos))
+#endif
+
+/* -------- DSI_DPI_LP_CMD_TIM -------- */
+#ifndef DSI_DPI_LP_CMD_TIM_INVACT_LPCMD_TIME_Pos
+#define DSI_DPI_LP_CMD_TIM_INVACT_LPCMD_TIME_Pos   0
+#define DSI_DPI_LP_CMD_TIM_INVACT_LPCMD_TIME_Msk   (0xFFU << DSI_DPI_LP_CMD_TIM_INVACT_LPCMD_TIME_Pos)
+#define DSI_DPI_LP_CMD_TIM_INVACT_LPCMD_TIME(value) \
+	(DSI_DPI_LP_CMD_TIM_INVACT_LPCMD_TIME_Msk & ((value) << DSI_DPI_LP_CMD_TIM_INVACT_LPCMD_TIME_Pos))
+
+#define DSI_DPI_LP_CMD_TIM_OUTVACT_LPCMD_TIME_Pos  16
+#define DSI_DPI_LP_CMD_TIM_OUTVACT_LPCMD_TIME_Msk  (0xFFU << DSI_DPI_LP_CMD_TIM_OUTVACT_LPCMD_TIME_Pos)
+#define DSI_DPI_LP_CMD_TIM_OUTVACT_LPCMD_TIME(value) \
+	(DSI_DPI_LP_CMD_TIM_OUTVACT_LPCMD_TIME_Msk & ((value) << DSI_DPI_LP_CMD_TIM_OUTVACT_LPCMD_TIME_Pos))
+#endif
+
+/* -------- DSI_PCKHDL_CFG : Protocol Configuration -------- */
+#ifndef DSI_PCKHDL_CFG_EOTP_TX_EN_Pos
+#define DSI_PCKHDL_CFG_EOTP_TX_EN_Pos     0
+#define DSI_PCKHDL_CFG_EOTP_TX_EN_Msk     (0x1U << DSI_PCKHDL_CFG_EOTP_TX_EN_Pos)
+#define DSI_PCKHDL_CFG_EOTP_TX_EN(value)  (DSI_PCKHDL_CFG_EOTP_TX_EN_Msk & ((value) << DSI_PCKHDL_CFG_EOTP_TX_EN_Pos))
+
+#define DSI_PCKHDL_CFG_EOTP_RX_EN_Pos     1
+#define DSI_PCKHDL_CFG_EOTP_RX_EN_Msk     (0x1U << DSI_PCKHDL_CFG_EOTP_RX_EN_Pos)
+#define DSI_PCKHDL_CFG_EOTP_RX_EN(value)  (DSI_PCKHDL_CFG_EOTP_RX_EN_Msk & ((value) << DSI_PCKHDL_CFG_EOTP_RX_EN_Pos))
+
+#define DSI_PCKHDL_CFG_BTA_EN_Pos         2
+#define DSI_PCKHDL_CFG_BTA_EN_Msk         (0x1U << DSI_PCKHDL_CFG_BTA_EN_Pos)
+#define DSI_PCKHDL_CFG_BTA_EN(value)      (DSI_PCKHDL_CFG_BTA_EN_Msk & ((value) << DSI_PCKHDL_CFG_BTA_EN_Pos))
+
+#define DSI_PCKHDL_CFG_ECC_RX_EN_Pos      3
+#define DSI_PCKHDL_CFG_ECC_RX_EN_Msk      (0x1U << DSI_PCKHDL_CFG_ECC_RX_EN_Pos)
+#define DSI_PCKHDL_CFG_ECC_RX_EN(value)   (DSI_PCKHDL_CFG_ECC_RX_EN_Msk & ((value) << DSI_PCKHDL_CFG_ECC_RX_EN_Pos))
+
+#define DSI_PCKHDL_CFG_CRC_RX_EN_Pos      4
+#define DSI_PCKHDL_CFG_CRC_RX_EN_Msk      (0x1U << DSI_PCKHDL_CFG_CRC_RX_EN_Pos)
+#define DSI_PCKHDL_CFG_CRC_RX_EN(value)   (DSI_PCKHDL_CFG_CRC_RX_EN_Msk & ((value) << DSI_PCKHDL_CFG_CRC_RX_EN_Pos))
+
+#define DSI_PCKHDL_CFG_EOTP_TX_LP_EN_Pos  5
+#define DSI_PCKHDL_CFG_EOTP_TX_LP_EN_Msk  (0x1U << DSI_PCKHDL_CFG_EOTP_TX_LP_EN_Pos)
+#define DSI_PCKHDL_CFG_EOTP_TX_LP_EN(value) \
+	(DSI_PCKHDL_CFG_EOTP_TX_LP_EN_Msk & ((value) << DSI_PCKHDL_CFG_EOTP_TX_LP_EN_Pos))
+#endif
+
+/* -------- DSI_MODE_CFG : Mode Configuration -------- */
+#ifndef DSI_MODE_CFG_CMD_VIDEO_MODE_Pos
+#define DSI_MODE_CFG_CMD_VIDEO_MODE_Pos   0
+#define DSI_MODE_CFG_CMD_VIDEO_MODE_Msk   (0x1U << DSI_MODE_CFG_CMD_VIDEO_MODE_Pos)
+#define DSI_MODE_CFG_CMD_VIDEO_MODE(value) \
+	(DSI_MODE_CFG_CMD_VIDEO_MODE_Msk & ((value) << DSI_MODE_CFG_CMD_VIDEO_MODE_Pos))
+#endif
+
+/* -------- DSI_VID_MODE_CFG : Video Mode Configuration -------- */
+#ifndef DSI_VID_MODE_CFG_VID_MODE_TYPE_Pos
+#define DSI_VID_MODE_CFG_VID_MODE_TYPE_Pos    0
+#define DSI_VID_MODE_CFG_VID_MODE_TYPE_Msk    (0x3U << DSI_VID_MODE_CFG_VID_MODE_TYPE_Pos)
+#define DSI_VID_MODE_CFG_VID_MODE_TYPE(value) \
+	(DSI_VID_MODE_CFG_VID_MODE_TYPE_Msk & ((value) << DSI_VID_MODE_CFG_VID_MODE_TYPE_Pos))
+
+#define DSI_VID_MODE_CFG_LP_VSA_EN_Pos        8
+#define DSI_VID_MODE_CFG_LP_VSA_EN_Msk        (0x1U << DSI_VID_MODE_CFG_LP_VSA_EN_Pos)
+#define DSI_VID_MODE_CFG_LP_VSA_EN(value)     (DSI_VID_MODE_CFG_LP_VSA_EN_Msk & ((value) << DSI_VID_MODE_CFG_LP_VSA_EN_Pos))
+
+#define DSI_VID_MODE_CFG_LP_VBP_EN_Pos        9
+#define DSI_VID_MODE_CFG_LP_VBP_EN_Msk        (0x1U << DSI_VID_MODE_CFG_LP_VBP_EN_Pos)
+#define DSI_VID_MODE_CFG_LP_VBP_EN(value)     (DSI_VID_MODE_CFG_LP_VBP_EN_Msk & ((value) << DSI_VID_MODE_CFG_LP_VBP_EN_Pos))
+
+#define DSI_VID_MODE_CFG_LP_VFP_EN_Pos        10
+#define DSI_VID_MODE_CFG_LP_VFP_EN_Msk        (0x1U << DSI_VID_MODE_CFG_LP_VFP_EN_Pos)
+#define DSI_VID_MODE_CFG_LP_VFP_EN(value)     (DSI_VID_MODE_CFG_LP_VFP_EN_Msk & ((value) << DSI_VID_MODE_CFG_LP_VFP_EN_Pos))
+
+#define DSI_VID_MODE_CFG_LP_VACT_EN_Pos       11
+#define DSI_VID_MODE_CFG_LP_VACT_EN_Msk       (0x1U << DSI_VID_MODE_CFG_LP_VACT_EN_Pos)
+#define DSI_VID_MODE_CFG_LP_VACT_EN(value)    (DSI_VID_MODE_CFG_LP_VACT_EN_Msk & ((value) << DSI_VID_MODE_CFG_LP_VACT_EN_Pos))
+
+#define DSI_VID_MODE_CFG_LP_HBP_EN_Pos        12
+#define DSI_VID_MODE_CFG_LP_HBP_EN_Msk        (0x1U << DSI_VID_MODE_CFG_LP_HBP_EN_Pos)
+#define DSI_VID_MODE_CFG_LP_HBP_EN(value)     (DSI_VID_MODE_CFG_LP_HBP_EN_Msk & ((value) << DSI_VID_MODE_CFG_LP_HBP_EN_Pos))
+
+#define DSI_VID_MODE_CFG_LP_HFP_EN_Pos        13
+#define DSI_VID_MODE_CFG_LP_HFP_EN_Msk        (0x1U << DSI_VID_MODE_CFG_LP_HFP_EN_Pos)
+#define DSI_VID_MODE_CFG_LP_HFP_EN(value)     (DSI_VID_MODE_CFG_LP_HFP_EN_Msk & ((value) << DSI_VID_MODE_CFG_LP_HFP_EN_Pos))
+
+#define DSI_VID_MODE_CFG_FRAME_BTA_ACK_EN_Pos 14
+#define DSI_VID_MODE_CFG_FRAME_BTA_ACK_EN_Msk (0x1U << DSI_VID_MODE_CFG_FRAME_BTA_ACK_EN_Pos)
+#define DSI_VID_MODE_CFG_FRAME_BTA_ACK_EN(value) \
+	(DSI_VID_MODE_CFG_FRAME_BTA_ACK_EN_Msk & ((value) << DSI_VID_MODE_CFG_FRAME_BTA_ACK_EN_Pos))
+
+#define DSI_VID_MODE_CFG_LP_CMD_EN_Pos        15
+#define DSI_VID_MODE_CFG_LP_CMD_EN_Msk        (0x1U << DSI_VID_MODE_CFG_LP_CMD_EN_Pos)
+#define DSI_VID_MODE_CFG_LP_CMD_EN(value)     (DSI_VID_MODE_CFG_LP_CMD_EN_Msk & ((value) << DSI_VID_MODE_CFG_LP_CMD_EN_Pos))
+
+#define DSI_VID_MODE_CFG_VPG_EN_Pos           16
+#define DSI_VID_MODE_CFG_VPG_EN_Msk           (0x1U << DSI_VID_MODE_CFG_VPG_EN_Pos)
+#define DSI_VID_MODE_CFG_VPG_EN(value)        (DSI_VID_MODE_CFG_VPG_EN_Msk & ((value) << DSI_VID_MODE_CFG_VPG_EN_Pos))
+
+#define DSI_VID_MODE_CFG_VPG_MODE_Pos         20
+#define DSI_VID_MODE_CFG_VPG_MODE_Msk         (0x3U << DSI_VID_MODE_CFG_VPG_MODE_Pos)
+#define DSI_VID_MODE_CFG_VPG_MODE(value)      (DSI_VID_MODE_CFG_VPG_MODE_Msk & ((value) << DSI_VID_MODE_CFG_VPG_MODE_Pos))
+
+#define DSI_VID_MODE_CFG_VPG_ORIENTATION_Pos  24
+#define DSI_VID_MODE_CFG_VPG_ORIENTATION_Msk  (0x1U << DSI_VID_MODE_CFG_VPG_ORIENTATION_Pos)
+#define DSI_VID_MODE_CFG_VPG_ORIENTATION(value) \
+	(DSI_VID_MODE_CFG_VPG_ORIENTATION_Msk & ((value) << DSI_VID_MODE_CFG_VPG_ORIENTATION_Pos))
+#endif
+
+/* -------- DSI_CMD_MODE_CFG : Command Mode Configuration -------- */
+#ifndef DSI_CMD_MODE_CFG_TEAR_FX_EN_Pos
+#define DSI_CMD_MODE_CFG_TEAR_FX_EN_Pos       0
+#define DSI_CMD_MODE_CFG_TEAR_FX_EN_Msk       (0x1U << DSI_CMD_MODE_CFG_TEAR_FX_EN_Pos)
+#define DSI_CMD_MODE_CFG_TEAR_FX_EN(value)    (DSI_CMD_MODE_CFG_TEAR_FX_EN_Msk & ((value) << DSI_CMD_MODE_CFG_TEAR_FX_EN_Pos))
+
+#define DSI_CMD_MODE_CFG_ACK_RQST_EN_Pos      1
+#define DSI_CMD_MODE_CFG_ACK_RQST_EN_Msk      (0x1U << DSI_CMD_MODE_CFG_ACK_RQST_EN_Pos)
+#define DSI_CMD_MODE_CFG_ACK_RQST_EN(value)   (DSI_CMD_MODE_CFG_ACK_RQST_EN_Msk & ((value) << DSI_CMD_MODE_CFG_ACK_RQST_EN_Pos))
+
+#define DSI_CMD_MODE_CFG_GEN_SW_0P_TX_Pos     8
+#define DSI_CMD_MODE_CFG_GEN_SW_0P_TX_Msk     (0x1U << DSI_CMD_MODE_CFG_GEN_SW_0P_TX_Pos)
+#define DSI_CMD_MODE_CFG_GEN_SW_0P_TX(value)  (DSI_CMD_MODE_CFG_GEN_SW_0P_TX_Msk & ((value) << DSI_CMD_MODE_CFG_GEN_SW_0P_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_GEN_SW_1P_TX_Pos     9
+#define DSI_CMD_MODE_CFG_GEN_SW_1P_TX_Msk     (0x1U << DSI_CMD_MODE_CFG_GEN_SW_1P_TX_Pos)
+#define DSI_CMD_MODE_CFG_GEN_SW_1P_TX(value)  (DSI_CMD_MODE_CFG_GEN_SW_1P_TX_Msk & ((value) << DSI_CMD_MODE_CFG_GEN_SW_1P_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_GEN_SW_2P_TX_Pos     10
+#define DSI_CMD_MODE_CFG_GEN_SW_2P_TX_Msk     (0x1U << DSI_CMD_MODE_CFG_GEN_SW_2P_TX_Pos)
+#define DSI_CMD_MODE_CFG_GEN_SW_2P_TX(value)  (DSI_CMD_MODE_CFG_GEN_SW_2P_TX_Msk & ((value) << DSI_CMD_MODE_CFG_GEN_SW_2P_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_GEN_SR_0P_TX_Pos     11
+#define DSI_CMD_MODE_CFG_GEN_SR_0P_TX_Msk     (0x1U << DSI_CMD_MODE_CFG_GEN_SR_0P_TX_Pos)
+#define DSI_CMD_MODE_CFG_GEN_SR_0P_TX(value)  (DSI_CMD_MODE_CFG_GEN_SR_0P_TX_Msk & ((value) << DSI_CMD_MODE_CFG_GEN_SR_0P_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_GEN_SR_1P_TX_Pos     12
+#define DSI_CMD_MODE_CFG_GEN_SR_1P_TX_Msk     (0x1U << DSI_CMD_MODE_CFG_GEN_SR_1P_TX_Pos)
+#define DSI_CMD_MODE_CFG_GEN_SR_1P_TX(value)  (DSI_CMD_MODE_CFG_GEN_SR_1P_TX_Msk & ((value) << DSI_CMD_MODE_CFG_GEN_SR_1P_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_GEN_SR_2P_TX_Pos     13
+#define DSI_CMD_MODE_CFG_GEN_SR_2P_TX_Msk     (0x1U << DSI_CMD_MODE_CFG_GEN_SR_2P_TX_Pos)
+#define DSI_CMD_MODE_CFG_GEN_SR_2P_TX(value)  (DSI_CMD_MODE_CFG_GEN_SR_2P_TX_Msk & ((value) << DSI_CMD_MODE_CFG_GEN_SR_2P_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_GEN_LW_TX_Pos        14
+#define DSI_CMD_MODE_CFG_GEN_LW_TX_Msk        (0x1U << DSI_CMD_MODE_CFG_GEN_LW_TX_Pos)
+#define DSI_CMD_MODE_CFG_GEN_LW_TX(value)     (DSI_CMD_MODE_CFG_GEN_LW_TX_Msk & ((value) << DSI_CMD_MODE_CFG_GEN_LW_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_DCS_SW_0P_TX_Pos     16
+#define DSI_CMD_MODE_CFG_DCS_SW_0P_TX_Msk     (0x1U << DSI_CMD_MODE_CFG_DCS_SW_0P_TX_Pos)
+#define DSI_CMD_MODE_CFG_DCS_SW_0P_TX(value)  (DSI_CMD_MODE_CFG_DCS_SW_0P_TX_Msk & ((value) << DSI_CMD_MODE_CFG_DCS_SW_0P_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_DCS_SW_1P_TX_Pos     17
+#define DSI_CMD_MODE_CFG_DCS_SW_1P_TX_Msk     (0x1U << DSI_CMD_MODE_CFG_DCS_SW_1P_TX_Pos)
+#define DSI_CMD_MODE_CFG_DCS_SW_1P_TX(value)  (DSI_CMD_MODE_CFG_DCS_SW_1P_TX_Msk & ((value) << DSI_CMD_MODE_CFG_DCS_SW_1P_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_DCS_SR_0P_TX_Pos     18
+#define DSI_CMD_MODE_CFG_DCS_SR_0P_TX_Msk     (0x1U << DSI_CMD_MODE_CFG_DCS_SR_0P_TX_Pos)
+#define DSI_CMD_MODE_CFG_DCS_SR_0P_TX(value)  (DSI_CMD_MODE_CFG_DCS_SR_0P_TX_Msk & ((value) << DSI_CMD_MODE_CFG_DCS_SR_0P_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_DCS_LW_TX_Pos        19
+#define DSI_CMD_MODE_CFG_DCS_LW_TX_Msk        (0x1U << DSI_CMD_MODE_CFG_DCS_LW_TX_Pos)
+#define DSI_CMD_MODE_CFG_DCS_LW_TX(value)     (DSI_CMD_MODE_CFG_DCS_LW_TX_Msk & ((value) << DSI_CMD_MODE_CFG_DCS_LW_TX_Pos))
+
+#define DSI_CMD_MODE_CFG_MAX_RD_PKT_SIZE_Pos  24
+#define DSI_CMD_MODE_CFG_MAX_RD_PKT_SIZE_Msk  (0x1U << DSI_CMD_MODE_CFG_MAX_RD_PKT_SIZE_Pos)
+#define DSI_CMD_MODE_CFG_MAX_RD_PKT_SIZE(value) \
+	(DSI_CMD_MODE_CFG_MAX_RD_PKT_SIZE_Msk & ((value) << DSI_CMD_MODE_CFG_MAX_RD_PKT_SIZE_Pos))
+#endif
+
+/* -------- DSI_CMD_PKT_STATUS -------- */
+#ifndef DSI_CMD_PKT_STATUS_GEN_CMD_EMPTY_Msk
+#define DSI_CMD_PKT_STATUS_GEN_CMD_EMPTY_Pos  0
+#define DSI_CMD_PKT_STATUS_GEN_CMD_EMPTY_Msk  (0x1U << DSI_CMD_PKT_STATUS_GEN_CMD_EMPTY_Pos)
+
+#define DSI_CMD_PKT_STATUS_GEN_CMD_FULL_Pos   1
+#define DSI_CMD_PKT_STATUS_GEN_CMD_FULL_Msk   (0x1U << DSI_CMD_PKT_STATUS_GEN_CMD_FULL_Pos)
+
+#define DSI_CMD_PKT_STATUS_GEN_PLD_W_EMPTY_Pos 2
+#define DSI_CMD_PKT_STATUS_GEN_PLD_W_EMPTY_Msk (0x1U << DSI_CMD_PKT_STATUS_GEN_PLD_W_EMPTY_Pos)
+
+#define DSI_CMD_PKT_STATUS_GEN_PLD_W_FULL_Pos 3
+#define DSI_CMD_PKT_STATUS_GEN_PLD_W_FULL_Msk (0x1U << DSI_CMD_PKT_STATUS_GEN_PLD_W_FULL_Pos)
+#endif
+
+/* -------- Timeout Registers -------- */
+#ifndef DSI_TO_CNT_CFG_LPRX_TO_CNT_Pos
+#define DSI_TO_CNT_CFG_LPRX_TO_CNT_Pos        0
+#define DSI_TO_CNT_CFG_LPRX_TO_CNT_Msk        (0xFFFFU << DSI_TO_CNT_CFG_LPRX_TO_CNT_Pos)
+#define DSI_TO_CNT_CFG_LPRX_TO_CNT(value)     (DSI_TO_CNT_CFG_LPRX_TO_CNT_Msk & ((value) << DSI_TO_CNT_CFG_LPRX_TO_CNT_Pos))
+
+#define DSI_TO_CNT_CFG_HSTX_TO_CNT_Pos        16
+#define DSI_TO_CNT_CFG_HSTX_TO_CNT_Msk        (0xFFFFU << DSI_TO_CNT_CFG_HSTX_TO_CNT_Pos)
+#define DSI_TO_CNT_CFG_HSTX_TO_CNT(value)     (DSI_TO_CNT_CFG_HSTX_TO_CNT_Msk & ((value) << DSI_TO_CNT_CFG_HSTX_TO_CNT_Pos))
+#endif
+
+#ifndef DSI_HS_RD_TO_CNT_HS_RD_TO_CNT_Pos
+#define DSI_HS_RD_TO_CNT_HS_RD_TO_CNT_Pos     0
+#define DSI_HS_RD_TO_CNT_HS_RD_TO_CNT_Msk     (0xFFFFU << DSI_HS_RD_TO_CNT_HS_RD_TO_CNT_Pos)
+#define DSI_HS_RD_TO_CNT_HS_RD_TO_CNT(value)  (DSI_HS_RD_TO_CNT_HS_RD_TO_CNT_Msk & ((value) << DSI_HS_RD_TO_CNT_HS_RD_TO_CNT_Pos))
+#endif
+
+#ifndef DSI_LP_RD_TO_CNT_LP_RD_TO_CNT_Pos
+#define DSI_LP_RD_TO_CNT_LP_RD_TO_CNT_Pos     0
+#define DSI_LP_RD_TO_CNT_LP_RD_TO_CNT_Msk     (0xFFFFU << DSI_LP_RD_TO_CNT_LP_RD_TO_CNT_Pos)
+#define DSI_LP_RD_TO_CNT_LP_RD_TO_CNT(value)  (DSI_LP_RD_TO_CNT_LP_RD_TO_CNT_Msk & ((value) << DSI_LP_RD_TO_CNT_LP_RD_TO_CNT_Pos))
+#endif
+
+#ifndef DSI_HS_WR_TO_CNT_HS_WR_TO_CNT_Pos
+#define DSI_HS_WR_TO_CNT_HS_WR_TO_CNT_Pos     0
+#define DSI_HS_WR_TO_CNT_HS_WR_TO_CNT_Msk     (0xFFFFU << DSI_HS_WR_TO_CNT_HS_WR_TO_CNT_Pos)
+#define DSI_HS_WR_TO_CNT_HS_WR_TO_CNT(value)  (DSI_HS_WR_TO_CNT_HS_WR_TO_CNT_Msk & ((value) << DSI_HS_WR_TO_CNT_HS_WR_TO_CNT_Pos))
+#endif
+
+#ifndef DSI_LP_WR_TO_CNT_LP_WR_TO_CNT_Pos
+#define DSI_LP_WR_TO_CNT_LP_WR_TO_CNT_Pos     0
+#define DSI_LP_WR_TO_CNT_LP_WR_TO_CNT_Msk     (0xFFFFU << DSI_LP_WR_TO_CNT_LP_WR_TO_CNT_Pos)
+#define DSI_LP_WR_TO_CNT_LP_WR_TO_CNT(value)  (DSI_LP_WR_TO_CNT_LP_WR_TO_CNT_Msk & ((value) << DSI_LP_WR_TO_CNT_LP_WR_TO_CNT_Pos))
+#endif
+
+#ifndef DSI_BTA_TO_CNT_BTA_TO_CNT_Pos
+#define DSI_BTA_TO_CNT_BTA_TO_CNT_Pos         0
+#define DSI_BTA_TO_CNT_BTA_TO_CNT_Msk         (0xFFFFU << DSI_BTA_TO_CNT_BTA_TO_CNT_Pos)
+#define DSI_BTA_TO_CNT_BTA_TO_CNT(value)      (DSI_BTA_TO_CNT_BTA_TO_CNT_Msk & ((value) << DSI_BTA_TO_CNT_BTA_TO_CNT_Pos))
+#endif
+
+/* -------- DSI_LPCLK_CTRL -------- */
+#ifndef DSI_LPCLK_CTRL_PHY_TXREQUESTCLKHS_Pos
+#define DSI_LPCLK_CTRL_PHY_TXREQUESTCLKHS_Pos 0
+#define DSI_LPCLK_CTRL_PHY_TXREQUESTCLKHS_Msk (0x1U << DSI_LPCLK_CTRL_PHY_TXREQUESTCLKHS_Pos)
+#define DSI_LPCLK_CTRL_PHY_TXREQUESTCLKHS(value) \
+	(DSI_LPCLK_CTRL_PHY_TXREQUESTCLKHS_Msk & ((value) << DSI_LPCLK_CTRL_PHY_TXREQUESTCLKHS_Pos))
+
+#define DSI_LPCLK_CTRL_AUTO_CLKLANE_CTRL_Pos  1
+#define DSI_LPCLK_CTRL_AUTO_CLKLANE_CTRL_Msk  (0x1U << DSI_LPCLK_CTRL_AUTO_CLKLANE_CTRL_Pos)
+#define DSI_LPCLK_CTRL_AUTO_CLKLANE_CTRL(value) \
+	(DSI_LPCLK_CTRL_AUTO_CLKLANE_CTRL_Msk & ((value) << DSI_LPCLK_CTRL_AUTO_CLKLANE_CTRL_Pos))
+#endif
+
+/* -------- D-PHY Timing Registers -------- */
+#ifndef DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME_Pos
+#define DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME_Pos  0
+#define DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME_Msk  (0x3FFU << DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME_Pos)
+#define DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME(value) \
+	(DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME_Msk & ((value) << DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKLP2HS_TIME_Pos))
+
+#define DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKHS2LP_TIME_Pos  16
+#define DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKHS2LP_TIME_Msk  (0x3FFU << DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKHS2LP_TIME_Pos)
+#define DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKHS2LP_TIME(value) \
+	(DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKHS2LP_TIME_Msk & ((value) << DSI_DPHY_TMR_LPCLK_CFG_PHY_CLKHS2LP_TIME_Pos))
+#endif
+
+#ifndef DSI_DPHY_TMR_CFG_PHY_LP2HS_TIME_Pos
+#define DSI_DPHY_TMR_CFG_PHY_LP2HS_TIME_Pos   0
+#define DSI_DPHY_TMR_CFG_PHY_LP2HS_TIME_Msk   (0x3FFU << DSI_DPHY_TMR_CFG_PHY_LP2HS_TIME_Pos)
+#define DSI_DPHY_TMR_CFG_PHY_LP2HS_TIME(value) \
+	(DSI_DPHY_TMR_CFG_PHY_LP2HS_TIME_Msk & ((value) << DSI_DPHY_TMR_CFG_PHY_LP2HS_TIME_Pos))
+
+#define DSI_DPHY_TMR_CFG_PHY_HS2LP_TIME_Pos   16
+#define DSI_DPHY_TMR_CFG_PHY_HS2LP_TIME_Msk   (0x3FFU << DSI_DPHY_TMR_CFG_PHY_HS2LP_TIME_Pos)
+#define DSI_DPHY_TMR_CFG_PHY_HS2LP_TIME(value) \
+	(DSI_DPHY_TMR_CFG_PHY_HS2LP_TIME_Msk & ((value) << DSI_DPHY_TMR_CFG_PHY_HS2LP_TIME_Pos))
+#endif
+
+/* -------- D-PHY Control Registers -------- */
+#ifndef DSI_DPHY_RSTZ_DPHY_SHUTDOWNZ_Pos
+#define DSI_DPHY_RSTZ_DPHY_SHUTDOWNZ_Pos      0
+#define DSI_DPHY_RSTZ_DPHY_SHUTDOWNZ_Msk      (0x1U << DSI_DPHY_RSTZ_DPHY_SHUTDOWNZ_Pos)
+#define DSI_DPHY_RSTZ_DPHY_SHUTDOWNZ(value)   (DSI_DPHY_RSTZ_DPHY_SHUTDOWNZ_Msk & ((value) << DSI_DPHY_RSTZ_DPHY_SHUTDOWNZ_Pos))
+
+#define DSI_DPHY_RSTZ_DPHY_RSTZ_Pos           1
+#define DSI_DPHY_RSTZ_DPHY_RSTZ_Msk           (0x1U << DSI_DPHY_RSTZ_DPHY_RSTZ_Pos)
+#define DSI_DPHY_RSTZ_DPHY_RSTZ(value)        (DSI_DPHY_RSTZ_DPHY_RSTZ_Msk & ((value) << DSI_DPHY_RSTZ_DPHY_RSTZ_Pos))
+
+#define DSI_DPHY_RSTZ_DPHY_ENABLECLK_Pos      2
+#define DSI_DPHY_RSTZ_DPHY_ENABLECLK_Msk      (0x1U << DSI_DPHY_RSTZ_DPHY_ENABLECLK_Pos)
+#define DSI_DPHY_RSTZ_DPHY_ENABLECLK(value)   (DSI_DPHY_RSTZ_DPHY_ENABLECLK_Msk & ((value) << DSI_DPHY_RSTZ_DPHY_ENABLECLK_Pos))
+#endif
+
+#ifndef DSI_DPHY_IF_CFG_N_LANES_Pos
+#define DSI_DPHY_IF_CFG_N_LANES_Pos           0
+#define DSI_DPHY_IF_CFG_N_LANES_Msk           (0x3U << DSI_DPHY_IF_CFG_N_LANES_Pos)
+#define DSI_DPHY_IF_CFG_N_LANES(value)        (DSI_DPHY_IF_CFG_N_LANES_Msk & ((value) << DSI_DPHY_IF_CFG_N_LANES_Pos))
+
+#define DSI_DPHY_IF_CFG_PHY_STOP_WAIT_TIME_Pos 8
+#define DSI_DPHY_IF_CFG_PHY_STOP_WAIT_TIME_Msk (0xFFU << DSI_DPHY_IF_CFG_PHY_STOP_WAIT_TIME_Pos)
+#define DSI_DPHY_IF_CFG_PHY_STOP_WAIT_TIME(value) \
+	(DSI_DPHY_IF_CFG_PHY_STOP_WAIT_TIME_Msk & ((value) << DSI_DPHY_IF_CFG_PHY_STOP_WAIT_TIME_Pos))
+#endif
+
+/* -------- D-PHY Status -------- */
+#ifndef DSI_DPHY_STATUS_PHY_LOCK_Msk
+#define DSI_DPHY_STATUS_PHY_LOCK_Pos          0
+#define DSI_DPHY_STATUS_PHY_LOCK_Msk          (0x1U << DSI_DPHY_STATUS_PHY_LOCK_Pos)
+
+#define DSI_DPHY_STATUS_PHY_STOPSTATECLKLANE_Pos 2
+#define DSI_DPHY_STATUS_PHY_STOPSTATECLKLANE_Msk (0x1U << DSI_DPHY_STATUS_PHY_STOPSTATECLKLANE_Pos)
+#endif
+
+/* -------- D-PHY Test Interface -------- */
+#ifndef DSI_DPHY_TST_CTRL0_PHY_TESTCLR_Pos
+#define DSI_DPHY_TST_CTRL0_PHY_TESTCLR_Pos    0
+#define DSI_DPHY_TST_CTRL0_PHY_TESTCLR_Msk    (0x1U << DSI_DPHY_TST_CTRL0_PHY_TESTCLR_Pos)
+#define DSI_DPHY_TST_CTRL0_PHY_TESTCLR(value) (DSI_DPHY_TST_CTRL0_PHY_TESTCLR_Msk & ((value) << DSI_DPHY_TST_CTRL0_PHY_TESTCLR_Pos))
+
+#define DSI_DPHY_TST_CTRL0_PHY_TESTCLK_Pos    1
+#define DSI_DPHY_TST_CTRL0_PHY_TESTCLK_Msk    (0x1U << DSI_DPHY_TST_CTRL0_PHY_TESTCLK_Pos)
+#define DSI_DPHY_TST_CTRL0_PHY_TESTCLK(value) (DSI_DPHY_TST_CTRL0_PHY_TESTCLK_Msk & ((value) << DSI_DPHY_TST_CTRL0_PHY_TESTCLK_Pos))
+#endif
+
+#ifndef DSI_DPHY_TST_CTRL1_PHY_TESTDIN_Pos
+#define DSI_DPHY_TST_CTRL1_PHY_TESTDIN_Pos    0
+#define DSI_DPHY_TST_CTRL1_PHY_TESTDIN_Msk    (0xFFU << DSI_DPHY_TST_CTRL1_PHY_TESTDIN_Pos)
+#define DSI_DPHY_TST_CTRL1_PHY_TESTDIN(value) (DSI_DPHY_TST_CTRL1_PHY_TESTDIN_Msk & ((value) << DSI_DPHY_TST_CTRL1_PHY_TESTDIN_Pos))
+
+#define DSI_DPHY_TST_CTRL1_PHY_TESTEN_Pos     16
+#define DSI_DPHY_TST_CTRL1_PHY_TESTEN_Msk     (0x1U << DSI_DPHY_TST_CTRL1_PHY_TESTEN_Pos)
+#define DSI_DPHY_TST_CTRL1_PHY_TESTEN(value)  (DSI_DPHY_TST_CTRL1_PHY_TESTEN_Msk & ((value) << DSI_DPHY_TST_CTRL1_PHY_TESTEN_Pos))
+
+#define DSI_DPHY_TST_CTRL1_PHY_TESTDOUT_Pos   8
+#define DSI_DPHY_TST_CTRL1_PHY_TESTDOUT_Msk   (0xFFU << DSI_DPHY_TST_CTRL1_PHY_TESTDOUT_Pos)
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* SAMA7D65_DSI_REGS_H_ */

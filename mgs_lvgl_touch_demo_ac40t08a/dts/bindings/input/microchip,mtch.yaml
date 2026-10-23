@@ -1,0 +1,45 @@
+description: |
+  Microchip MTCH capacitive touch controller with button, slider, and wheel support.
+
+  Both irq-gpios and reset-gpios are optional: when irq-gpios is
+  absent the driver uses polling mode; when reset-gpios is absent
+  only a soft reset is performed at init.
+
+  Example:
+    mtch@3a {
+      compatible = "microchip,mtch";
+      reg = <0x3a>;
+      irq-gpios = <&pioa 20 GPIO_ACTIVE_LOW>;
+    };
+
+compatible: "microchip,mtch"
+
+include:
+  - name: i2c-device.yaml
+  - name: touchscreen-common.yaml
+
+properties:
+  reset-gpios:
+    type: phandle-array
+    description: |
+      Optional GPIO connected to the MTCH reset pin.
+      When absent, the driver skips hardware reset and uses soft
+      reset only.
+
+  irq-gpios:
+    type: phandle-array
+    description: |
+      Optional GPIO connected to the MTCH CHG (interrupt) pin.
+      When absent, the driver operates in polling mode.
+
+      CHG is open-drain; an external pull-up to VddIO (typically
+      3.3k) is recommended. The driver enables an internal pull-up
+      as a fallback.
+
+  startup-delay-ms:
+    type: int
+    default: 0
+    description: |
+      Delay in milliseconds before probing the I2C bus. Allows the
+      controller time to complete its power-on-reset when there is
+      no reset GPIO
