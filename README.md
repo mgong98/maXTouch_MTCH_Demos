@@ -36,7 +36,8 @@ Select [] mgs_lvgl_touch_demo_ac69t88a or [] mgs_lvgl_touch_demo_ac40t08a during
 Building the solution:
 
 ```
-/build mgs_lvgl_touch_demo_ac40t08a/sama7d65_curiosity_ac40t08a -b sama7d65_curiosity/sama7d65
+/build mgs_lvgl_touch/touch_demo_ac40t08a/ -b sama7d65_curiosity/sama7d65 or
+/build mgs_lvgl_touch/touch_demo_ac69t88a -b sama7d65_curiosity/sama7d65
 
 ```
 
@@ -44,9 +45,10 @@ Building the solution:
 
 Finally flash the application if you have a J-link connected
 ```
-/flash mgs_lvgl_touch_demo_ac40t08a/sama7d65_curiosity_ac40t08a
+/flash mgs_lvgl_touch/touch_demo_ac40t08a  or
+/flash mgs_lvgl_touch/touch_demo_ac69t88a
 
-or copy the binary in /build/mgs_lvgl_touch_demo_ac40t08a/sama7d65_curiosity_ac40t08a/zephyr/zephry.bin along with the boot.bin into a FAT32 SD Card.
+or copy the binary in /build/mgs_lvgl_touch/touch_demo_ac40t08a/zephyr/zephry.bin along with the boot.bin into a FAT32 SD Card.
 ```
 
 The SDK version is auto-detected from the Zephyr source — no manual version management needed.
@@ -62,7 +64,7 @@ Pre-built Microchip app packs can be installed from the community registry. Duri
 ```
   Available app packs:
 
-  [x] mgs_lvgl_touch_demo_ac40t08a    MGS LVGL Touch Demo using AC40T08A MIPI Display
+  [x] mgs_lvgl_touch    MGS LVGL Touch Demo using AC40T08A MIPI Display (Examples)
 
   Space: toggle  |  Enter: confirm  |  Ctrl+C: skip
 ```
