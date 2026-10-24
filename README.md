@@ -1,7 +1,8 @@
 # Microchip Zephyr LVGL App Demo using maXTouch and MTCH Buttons/Sliders/Wheels
 
-This repository contains sample applications for maXTouch touch and MTCH BSW products.
-Apps are designed to demonstrate touch devices working under the Zephyr OS using LVGL Library APIs.  Example input drivers can be used to build custom applications.
+This repository contains sample applications for maXTouch and MTCH BSW products.
+Apps are designed to demonstrate touch devices working under Zephyr OS using LVGL Library APIs.
+Example input drivers can be used to build custom applications.
 
 ## Requirements
 
@@ -28,7 +29,7 @@ git clone https://github.com/mchpgfx/zephyr-mchp-workspace.git && cd zephyr-mchp
 chmod +x zephyr.sh
 ./zephyr.sh /install --zephyr-repo https://github.com/mhtmhn/zephyr.git --zephyr-ref \ custom-ad7d65              
 
-Select [] mgs_lvgl_touch_demo_ac69t88a or [] mgs_lvgl_touch_demo_ac40t08a during installation
+Select [] mgs_lvgl_touch    /* At installation time - all apps will be downloaded */
 ```
 
 **Build Application**
@@ -81,3 +82,14 @@ zephyr.sh               Linux / macOS entry point
 ```
 
 Directories created at runtime (gitignored): `.venv/`, `.sdk/`, `.west/`, `zephyr/`, `modules/`, `build/`
+
+## Input Drivers
+
+The following input touch drivers can be used with customer applications:
+
+```
+microchip_maxtouch.c -- maXTouch input driver.  Handles deliver of touch coordinates
+microchip_maxtouch.h -- maXTouch header file
+microchip_mtch.c -- MTCH3380P and MTCH3240P input driver.  Handles buttons, wheels and sliders
+microchip_mtch.h -- MTCH header file
+```
